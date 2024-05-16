@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/Ha4sh-447/diagramFromText/diagrams"
 	// "github.com/Ha4sh-447/diagramFromText/flowchart"
 )
@@ -45,13 +46,11 @@ func diagramRenderer() {
 	// diagrams.AddToRight(&hArrow3, &subNode3)
 
 	// Same fking problem!!!
-	//can render linear diagrams but
+	// can render linear diagrams but
 	// What for non linear diagrams with nodes branching from sides
 	diagram.AddShapes(subNode1)
 	diagram.AddShapes(vArrow1)
 	diagram.AddShapes(parent)
-	// diagram.AddShapes(hArrow3)
-	// diagram.AddShapes(subNode3)
 	diagram.AddShapes(vArrow2)
 	diagram.AddShapes(subNode2)
 
@@ -68,4 +67,6 @@ func diagramRenderer() {
 	diagrams.Horizontal_shape_rectangle("foobar")
 	// fmt.Println()
 	diagrams.HorizontalArrow("foobar")
+
+	// diagram.RenderHorizontal()
 }

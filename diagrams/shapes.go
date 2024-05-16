@@ -4,6 +4,10 @@ import (
 	"fmt"
 )
 
+const H_s_rectangle_len = len("╭――――――――――――――――――╮")
+const H_a_len = len("--%s-->")
+const s_rectangle_len = len("┌──────────────┐")
+
 func Shape_rectangle(content string) {
 	fmt.Println("┌──────────────┐")
 	fmt.Printf("│ %-12s │\n", content)
@@ -13,9 +17,7 @@ func Shape_rectangle(content string) {
 func Horizontal_shape_rectangle(content string) {
 	fmt.Printf(
 		`╭――――――――――――――――――╮
-│                  │
 │%-12s      │
-│                  │
 ╰――――――――――――――――――╯`, content)
 }
 
