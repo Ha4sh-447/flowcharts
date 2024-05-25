@@ -21,9 +21,14 @@ func NewCanvas(r, c int) *Canvas {
 	for i := range g {
 		g[i] = make([]string, c)
 	}
+	for i := range g {
+		for j := range g[i] {
+			g[i][j] = "."
+		}
+	}
 
 	p := Point{
-		X: r/2 - 2,
+		X: c/2 - 10,
 		Y: 0,
 	}
 
@@ -35,10 +40,14 @@ func NewCanvas(r, c int) *Canvas {
 	}
 }
 
+func (c *Canvas) CenterX() {
+	c.Cursor.X = c.Cols/2 - 10
+}
+
 func (c *Canvas) Render() {
 	for i := range c.Grid {
 		for j := range c.Grid[0] {
-			fmt.Printf("%s\t", c.Grid[i][j])
+			fmt.Printf("%s", c.Grid[i][j])
 		}
 		fmt.Println()
 	}

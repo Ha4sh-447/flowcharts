@@ -5,10 +5,16 @@ import (
 
 	"github.com/Ha4sh-447/diagramFromText/diagrams"
 	// "github.com/Ha4sh-447/diagramFromText/flowchart"
+	"github.com/Ha4sh-447/diagramFromText/draw"
 )
 
 func main() {
-	diagramRenderer()
+	// diagramRenderer()
+	canvas := draw.NewCanvas(30, 80)
+	draw.Box("foobar", canvas)
+	draw.DownArrow("Yes", canvas)
+	canvas.Render()
+	fmt.Println(canvas.Cursor)
 }
 
 func diagramRenderer() {
