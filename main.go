@@ -10,9 +10,18 @@ import (
 
 func main() {
 	// diagramRenderer()
-	canvas := draw.NewCanvas(30, 80)
+	canvas := draw.NewCanvas(30, 100)
 	draw.Box("foobar", canvas)
+	draw.RightArrow("", canvas)
+	draw.BoxHorizontal("foobar", canvas)
+	// draw.Box("foobar", canvas)
+	draw.RightArrow("", canvas)
+	draw.BoxHorizontal("foobar", canvas)
+	draw.RightArrow("", canvas)
+	draw.BoxHorizontal("foobar", canvas)
 	draw.DownArrow("Yes", canvas)
+	draw.Box("foobar", canvas)
+	draw.LeftArrow("", canvas)
 	canvas.Render()
 	fmt.Println(canvas.Cursor)
 }
@@ -67,7 +76,7 @@ func diagramRenderer() {
 	// diagram.Render()
 	for _, shape := range diagram.Shapes {
 		// fmt.Println(shape.Type)
-		diagrams.DRender(shape)
+		diagrams.DRender(shape, draw.NewCanvas(20, 80))
 	}
 
 	diagrams.Horizontal_shape_rectangle("foobar")

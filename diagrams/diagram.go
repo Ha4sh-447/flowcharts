@@ -1,8 +1,9 @@
 package diagrams
 
 import (
-	"fmt"
-	"strings"
+	// "fmt"
+	"github.com/Ha4sh-447/diagramFromText/draw"
+	// "strings"
 )
 
 type ShapeType int
@@ -15,16 +16,20 @@ const (
 	HLine
 	VLine
 	HRectangle
+	LeftArrow
+	RightArrow
+	DownArrow
 )
 
 type Shape struct {
-	Type       ShapeType
-	Content    string
-	Left       *Shape
-	Right      *Shape
-	Top        *Shape
-	Bottom     *Shape
-	IsRendered bool
+	Type         ShapeType
+	Content      string
+	Left         *Shape
+	Right        *Shape
+	Top          *Shape
+	Bottom       *Shape
+	IsRendered   bool
+	IsHorizontal bool
 }
 
 type Diagram struct {
@@ -33,10 +38,6 @@ type Diagram struct {
 
 func New() *Diagram {
 	return &Diagram{}
-}
-
-func NewShape() {
-
 }
 
 // Add Shapes to the Diagram struct
@@ -72,87 +73,44 @@ func AddToTop(shape *Shape, subShape *Shape) Shape {
 	return *shape
 }
 
-func DRender(shape Shape) {
+func DRender(shape Shape, c *draw.Canvas) {
 
 	// Base condition
 	if shape.Top == nil && shape.Left == nil && shape.Right == nil && shape.Bottom == nil && shape.IsRendered == false {
 		shape.IsRendered = true
-		RenderType(shape)
+		RenderType(shape, c)
+		// draw.CenterX(c)
 		return
 	}
 
 	// Render initial shape
 	if !shape.IsRendered {
 		shape.IsRendered = true
-		RenderType(shape)
+		RenderType(shape, c)
 	}
 
 	if shape.Right != nil && shape.IsRendered == false {
 		shape.IsRendered = true
-		DRender(*shape.Right)
+		DRender(*shape.Right, c)
+		// draw.CenterX(c)
 	} else if shape.Left != nil && shape.IsRendered == false {
 		shape.IsRendered = true
-		DRender(*shape.Left)
+		DRender(*shape.Left, c)
+		// draw.CenterX(c)
 	} else if shape.Bottom != nil && shape.IsRendered == false {
 		shape.IsRendered = true
-		DRender(*shape.Bottom)
+		DRender(*shape.Bottom, c)
 	} else if shape.Top != nil && shape.IsRendered == false {
 		shape.IsRendered = true
-		DRender(*shape.Top)
-	}
-}
-
-func RenderHorizontal(diagram []string) {
-	// Find the maximum length of all elements in the diagram
-	maxLength := 0
-	for _, element := range diagram {
-		if len(element) > maxLength {
-			maxLength = len(element)
-		}
-	}
-
-	// Print each element side by side with padding to match the maxLength
-	for _, element := range diagram {
-		padding := maxLength - len(element)
-		fmt.Printf("%s%s", element, strings.Repeat(" ", padding))
-	}
-	fmt.Println() // Print newline after rendering the horizontal line
-}
-
-func (d *Diagram) RenderHorizontal() {
-	// Calculate the maximum content length
-	maxContentLen := 0
-	for _, shape := range d.Shapes {
-		if len(shape.Content) > maxContentLen {
-			maxContentLen = len(shape.Content)
-		}
-	}
-
-	// Render shapes
-	for _, shape := range d.Shapes {
-		switch shape.Type {
-		case Rectangle:
-			fmt.Printf("┌%s┐\n", strings.Repeat("─", maxContentLen+2))
-			fmt.Printf("│ %-*s │\n", maxContentLen, shape.Content)
-			fmt.Printf("└%s┘\n", strings.Repeat("─", maxContentLen+2))
-		case Diamond:
-			fmt.Println("    /\\")
-			fmt.Println("   /  \\")
-			fmt.Println("  /    \\")
-			fmt.Printf(" /  %-4s  \\\n", shape.Content)
-			fmt.Println("  \\    /")
-			fmt.Println("   \\  /")
-			fmt.Println("    \\/")
-
-		}
+		DRender(*shape.Top, c)
 	}
 }
 
 // Render Shape based upon it's type
-func RenderType(shape Shape) {
+func RenderType(shape Shape, c *draw.Canvas) {
 	switch shape.Type {
 	case Rectangle:
-		Shape_rectangle(shape.Content)
+		draw.Box(shape.Content, c)
 	case Diamond:
 		Shape_daimond(shape.Content)
 	case HArrow:
@@ -165,6 +123,12 @@ func RenderType(shape Shape) {
 		VerticalLine(shape.Content)
 	case HRectangle:
 		Horizontal_shape_rectangle(shape.Content)
+	case LeftArrow:
+		draw.LeftArrow(shape.Content, c)
+	case RightArrow:
+		draw.RightArrow(shape.Content, c)
+	case DownArrow:
+		draw.DownArrow(shape.Content, c)
 	}
 
 }

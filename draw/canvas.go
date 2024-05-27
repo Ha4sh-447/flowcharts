@@ -23,7 +23,7 @@ func NewCanvas(r, c int) *Canvas {
 	}
 	for i := range g {
 		for j := range g[i] {
-			g[i][j] = "."
+			g[i][j] = " "
 		}
 	}
 
@@ -44,6 +44,9 @@ func (c *Canvas) CenterX() {
 	c.Cursor.X = c.Cols/2 - 10
 }
 
+func (c *Canvas) CenterY() {
+}
+
 func (c *Canvas) Render() {
 	for i := range c.Grid {
 		for j := range c.Grid[0] {
@@ -55,6 +58,7 @@ func (c *Canvas) Render() {
 
 // When drawing on canvas
 // Draw the first shape in center
+// ///////////////////////////// DRAW LOGIC /////////////////////////////////
 func (c *Canvas) Draw() {
 
 }
