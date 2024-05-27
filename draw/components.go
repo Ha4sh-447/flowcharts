@@ -3,7 +3,7 @@ package draw
 import "fmt"
 
 const (
-	width    = 7
+	width    = 10
 	height   = 3
 	arrowLen = 4
 )

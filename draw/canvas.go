@@ -23,7 +23,7 @@ func NewCanvas(r, c int) *Canvas {
 	}
 	for i := range g {
 		for j := range g[i] {
-			g[i][j] = " "
+			g[i][j] = "."
 		}
 	}
 

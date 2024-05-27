@@ -11,10 +11,6 @@ type ShapeType int
 const (
 	Rectangle ShapeType = iota
 	Diamond
-	HArrow
-	VArrow
-	HLine
-	VLine
 	HRectangle
 	LeftArrow
 	RightArrow
@@ -92,11 +88,11 @@ func DRender(shape Shape, c *draw.Canvas) {
 	if shape.Right != nil && shape.IsRendered == false {
 		shape.IsRendered = true
 		DRender(*shape.Right, c)
-		// draw.CenterX(c)
+		draw.CenterX(c, len(shape.Content)/2)
 	} else if shape.Left != nil && shape.IsRendered == false {
 		shape.IsRendered = true
 		DRender(*shape.Left, c)
-		// draw.CenterX(c)
+		draw.CenterX(c, len(shape.Content)/2)
 	} else if shape.Bottom != nil && shape.IsRendered == false {
 		shape.IsRendered = true
 		DRender(*shape.Bottom, c)
@@ -113,14 +109,6 @@ func RenderType(shape Shape, c *draw.Canvas) {
 		draw.Box(shape.Content, c)
 	case Diamond:
 		Shape_daimond(shape.Content)
-	case HArrow:
-		HorizontalArrow(shape.Content)
-	case HLine:
-		HorizontalLine(shape.Content)
-	case VArrow:
-		VerticalArrow(shape.Content)
-	case VLine:
-		VerticalLine(shape.Content)
 	case HRectangle:
 		Horizontal_shape_rectangle(shape.Content)
 	case LeftArrow:
