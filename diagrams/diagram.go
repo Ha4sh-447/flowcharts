@@ -2,6 +2,8 @@ package diagrams
 
 import (
 	// "fmt"
+	"fmt"
+
 	"github.com/Ha4sh-447/diagramFromText/draw"
 	// "strings"
 )
@@ -26,6 +28,8 @@ type Shape struct {
 	Bottom       *Shape
 	IsRendered   bool
 	IsHorizontal bool
+	PrevLen      int
+	RenderDir    string
 }
 
 type Diagram struct {
@@ -71,11 +75,13 @@ func AddToTop(shape *Shape, subShape *Shape) Shape {
 
 func DRender(shape Shape, c *draw.Canvas) {
 
+	fmt.Println()
 	// Base condition
 	if shape.Top == nil && shape.Left == nil && shape.Right == nil && shape.Bottom == nil && shape.IsRendered == false {
 		shape.IsRendered = true
+		// fmt.Println("DRENDER- ", shape.Content, shape.Right)
 		RenderType(shape, c)
-		// draw.CenterX(c)
+		draw.CenterX(c, len(shape.Content)/2)
 		return
 	}
 
@@ -88,11 +94,12 @@ func DRender(shape Shape, c *draw.Canvas) {
 	if shape.Right != nil && shape.IsRendered == false {
 		shape.IsRendered = true
 		DRender(*shape.Right, c)
-		draw.CenterX(c, len(shape.Content)/2)
+		draw.CenterX(c, (len(shape.Content)+2)/2)
 	} else if shape.Left != nil && shape.IsRendered == false {
 		shape.IsRendered = true
+		shape.Left.RenderDir = "left"
 		DRender(*shape.Left, c)
-		draw.CenterX(c, len(shape.Content)/2)
+		// draw.CenterX(c, len(shape.Content)/2)
 	} else if shape.Bottom != nil && shape.IsRendered == false {
 		shape.IsRendered = true
 		DRender(*shape.Bottom, c)
@@ -104,19 +111,23 @@ func DRender(shape Shape, c *draw.Canvas) {
 
 // Render Shape based upon it's type
 func RenderType(shape Shape, c *draw.Canvas) {
+	if shape.Type == HRectangle && shape.RenderDir == "left" {
+		draw.BoxHorizontalLeft(shape.Content, c)
+		return
+	}
 	switch shape.Type {
 	case Rectangle:
 		draw.Box(shape.Content, c)
 	case Diamond:
 		Shape_daimond(shape.Content)
 	case HRectangle:
-		Horizontal_shape_rectangle(shape.Content)
+		draw.BoxHorizontal(shape.Content, c)
 	case LeftArrow:
 		draw.LeftArrow(shape.Content, c)
 	case RightArrow:
 		draw.RightArrow(shape.Content, c)
 	case DownArrow:
-		draw.DownArrow(shape.Content, c)
+		draw.DownArrow(shape.Content, c, shape.PrevLen)
 	}
 
 }
