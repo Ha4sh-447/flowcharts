@@ -146,7 +146,7 @@ func RightArrow(content string, c *Canvas) {
 	x := c.Cursor.X + (width / 2) + 1
 	y := c.Cursor.Y - (height / 2) - 1
 	// fmt.Println("Right Arrow - ", c.Cursor.X)
-	fmt.Println("Right Arrow updated ordinate - ", x)
+	// fmt.Println("Right Arrow updated ordinate - ", x)
 
 	for i := x; i < x+arrowLen; i++ {
 		c.Grid[y][i+1] = "-"

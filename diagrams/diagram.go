@@ -117,17 +117,21 @@ func RenderType(shape Shape, c *draw.Canvas) {
 	}
 	switch shape.Type {
 	case Rectangle:
-		draw.Box(shape.Content, c)
+		// draw.Box(shape.Content, c)
+		BoX(shape, c)
 	case Diamond:
 		Shape_daimond(shape.Content)
 	case HRectangle:
 		draw.BoxHorizontal(shape.Content, c)
 	case LeftArrow:
-		draw.LeftArrow(shape.Content, c)
+		// draw.LeftArrow(shape.Content, c)
+		Arrow(&shape, c)
 	case RightArrow:
-		draw.RightArrow(shape.Content, c)
+		// draw.RightArrow(shape.Content, c)
+		Arrow(&shape, c)
 	case DownArrow:
-		draw.DownArrow(shape.Content, c, shape.PrevLen)
+		// draw.DownArrow(shape.Content, c, shape.PrevLen)
+		Arrow(&shape, c)
 	}
 
 }

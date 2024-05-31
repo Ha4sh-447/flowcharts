@@ -10,9 +10,59 @@ import (
 
 func main() {
 	// diagramRenderer()
+	subNode3 := diagrams.Shape{
+		Type:    diagrams.HRectangle,
+		Content: "SubZeroMygawwwwwwdddd3",
+	}
+
+	hArrow4 := diagrams.Shape{
+		Type:    diagrams.DownArrow,
+		Content: "",
+	}
+
+	subNode4 := diagrams.Shape{
+		Type:    diagrams.HRectangle,
+		Content: "SubOne4",
+	}
+
+	hArrow5 := diagrams.Shape{
+		Type:    diagrams.LeftArrow,
+		Content: "",
+	}
+
+	subNode5 := diagrams.Shape{
+		Type:    diagrams.HRectangle,
+		Content: "SubOne5",
+	}
+
+	hArrow6 := diagrams.Shape{
+		Type:    diagrams.LeftArrow,
+		Content: "",
+	}
+
+	subNode6 := diagrams.Shape{
+		Type:    diagrams.HRectangle,
+		Content: "SubOne6",
+	}
 
 	canvas := draw.NewCanvas(20, 100)
-	diagramRenderer(canvas)
+
+	diagrams.AddToLeft(&subNode4, &hArrow5)
+	diagrams.AddToRight(&hArrow5, &subNode4)
+	diagrams.AddToRight(&subNode5, &hArrow5)
+	diagrams.AddToLeft(&subNode5, &hArrow6)
+	diagrams.AddToRight(&hArrow6, &subNode5)
+	diagrams.AddToLeft(&hArrow6, &subNode6)
+	diagrams.AddToRight(&subNode6, &hArrow6)
+
+	diagrams.BoX(subNode3, canvas)
+	diagrams.Arrow(&hArrow4, canvas)
+	diagrams.BoX(subNode4, canvas)
+	diagrams.Arrow(&hArrow5, canvas)
+	diagrams.BoX(subNode5, canvas)
+	diagrams.Arrow(&hArrow6, canvas)
+	diagrams.BoX(subNode6, canvas)
+	// diagramRenderer(canvas)
 	canvas.Render()
 
 }
@@ -80,12 +130,12 @@ func diagramRenderer(c *draw.Canvas) {
 
 	subNode4 := diagrams.Shape{
 		Type:    diagrams.HRectangle,
-		Content: "Sub4",
+		Content: "Subbbbb4",
 	}
 
 	subNode5 := diagrams.Shape{
 		Type:      diagrams.HRectangle,
-		Content:   "Sub5",
+		Content:   "Subvvv5",
 		RenderDir: "left",
 	}
 
@@ -105,22 +155,34 @@ func diagramRenderer(c *draw.Canvas) {
 		RenderDir: "left",
 	}
 
+	// diagrams.Arrow(&hArrow6, c)
+
 	fmt.Println(hArrow4, subNode5)
 
 	diagrams.AddToBottom(&subNode1, &vArrow1)
+	diagrams.AddToTop(&vArrow1, &subNode1)
 	diagrams.AddToBottom(&parent, &vArrow2)
+	diagrams.AddToTop(&vArrow2, &parent)
 	// diagrams.AddToRight(&parent, &hArrow3)
 	// diagrams.AddToRight(&hArrow3, &subNode3)
 
 	diagrams.AddToRight(&parent, &hArrow3)
+	diagrams.AddToLeft(&hArrow3, &parent)
 	diagrams.AddToRight(&subNode3, &hArrow4)
+	diagrams.AddToLeft(&hArrow4, &subNode3)
 	diagrams.AddToRight(&hArrow4, &subNode4)
+	diagrams.AddToLeft(&subNode4, &hArrow4)
 	diagrams.AddToRight(&hArrow3, &subNode3)
+	diagrams.AddToLeft(&subNode3, &hArrow3)
 
 	diagrams.AddToLeft(&parent, &hArrow5)
+	diagrams.AddToRight(&hArrow5, &parent)
 	diagrams.AddToLeft(&hArrow5, &subNode5)
+	diagrams.AddToRight(&subNode5, &hArrow5)
 	diagrams.AddToLeft(&hArrow6, &subNode6)
+	diagrams.AddToRight(&subNode6, &hArrow6)
 	diagrams.AddToLeft(&subNode5, &hArrow6)
+	diagrams.AddToRight(&hArrow6, &subNode5)
 	// Same fking problem!!!
 	// can render linear diagrams but
 	// What for non linear diagrams with nodes branching from sides
@@ -138,14 +200,9 @@ func diagramRenderer(c *draw.Canvas) {
 	diagram.AddShapes(vArrow2)
 	diagram.AddShapes(subNode2)
 
-	fmt.Println("LOGS FROM MAIN.GO-diagramRenderer")
-	for _, shape := range diagram.Shapes {
-		fmt.Printf("%d ---> %s\n", shape.Type, shape.Content)
-	}
-
 	// diagram.Render()
 	for _, shape := range diagram.Shapes {
-		// fmt.Println(shape.Type)
+		// fmt.Println(shape)
 		diagrams.DRender(shape, c)
 	}
 

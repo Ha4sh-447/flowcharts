@@ -23,12 +23,12 @@ func NewCanvas(r, c int) *Canvas {
 	}
 	for i := range g {
 		for j := range g[i] {
-			g[i][j] = " "
+			g[i][j] = "."
 		}
 	}
 
 	p := Point{
-		X: c/2 - 30,
+		X: c/2 - 10,
 		Y: 0,
 	}
 
