@@ -41,7 +41,7 @@ func NewCanvas(r, c int) *Canvas {
 }
 
 func (c *Canvas) CenterX() {
-	c.Cursor.X = c.Cols/2 - 10
+	c.Cursor.X = c.Cols/2 + 10
 }
 
 func (c *Canvas) CenterY() {
