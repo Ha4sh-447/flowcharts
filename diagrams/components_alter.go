@@ -117,21 +117,6 @@ func BoX(s Shape, c *draw.Canvas) {
 		// c.Cursor.X = x + (width+1)/2
 		c.Cursor.Y = y + HEIGHT
 	}
-
-	// UPDATE COORDs FOR NEXT RENDER
-	// SETTING CURSOR TO BOTTOM RIGHT
-	// c.Cursor.Y = y + HEIGHT
-	/*
-		if(s.RenderDir=="left"){
-			c.Cursor.Y = y+HEIGHT/2
-		}else if(s.RenderDir=="right"){
-			c.Cursor.X = x+width+1
-			c.Cursor.Y = y+HEIGHT/2
-		}else{
-			c.Cursor.X = x+(width+1)/2
-			c.Cursor.Y = y+c.Cursor.Y
-		}
-	*/
 }
 
 // What this function does is : simple - render an arrow based upon the render direction
@@ -176,6 +161,10 @@ func Arrow(s *Shape, c *draw.Canvas) {
 		c.Grid[y+ARROWLEN+1][x] = "v"
 
 		c.Cursor.Y = y + ARROWLEN + 2
+
+		// Setting the center of the canvas according to the diagram
+		// using the down arrow as the reference
+		c.Center = c.Cursor.X
 	}
 
 	fmt.Println("ARROW- final X ", x)

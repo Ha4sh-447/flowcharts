@@ -30,10 +30,11 @@ type Shape struct {
 	IsHorizontal bool
 	PrevLen      int
 	RenderDir    string
+	IsLast       bool
 }
 
 type Diagram struct {
-	Shapes []Shape
+	S []Shape
 }
 
 func New() *Diagram {
@@ -42,7 +43,7 @@ func New() *Diagram {
 
 // Add Shapes to the Diagram struct
 func (d *Diagram) AddShapes(shape Shape) {
-	d.Shapes = append(d.Shapes, shape)
+	d.S = append(d.S, shape)
 }
 
 // Add Shape to the right of the node
@@ -73,13 +74,91 @@ func AddToTop(shape *Shape, subShape *Shape) Shape {
 	return *shape
 }
 
+func ReRender(s *Shape, shapes []Shape, c *draw.Canvas) {
+
+	if s.IsRendered == false {
+		for _, i := range shapes {
+			if s == &i {
+				RenderType(*s, c)
+				s.IsRendered = true
+			}
+		}
+	}
+
+	if s.IsLast == true {
+		RenderType(*s, c)
+		draw.CenterX(c, 0)
+		return
+	}
+
+	if s.Left != nil && s.IsRendered == false {
+		// RenderType(*s.Left, c)
+		ReRender(s.Left, shapes, c)
+		// s.IsRendered= true
+	}
+
+	if s.Right != nil && s.IsRendered == false {
+		// RenderType(*s.Right, c)
+		ReRender(s.Right, shapes, c)
+		// s.IsRendered=true
+	}
+
+	if s.Bottom != nil && s.IsRendered == false {
+		// RenderType(*s.Bottom, c)
+		ReRender(s.Bottom, shapes, c)
+		// s.IsRendered=true
+	}
+
+	if s.Top != nil && s.IsRendered == false {
+		// RenderType(*s.Top, c)
+		ReRender(s.Top, shapes, c)
+		// s.IsRendered=true
+	}
+
+}
+
+func RenderD(shape *Shape, c *draw.Canvas) {
+
+	if shape.IsRendered == false {
+		shape.IsRendered = true
+		RenderType(*shape, c)
+	}
+
+	if shape.IsLast == true {
+		fmt.Println("RenderD--")
+		// shape.IsRendered = true
+		// RenderType(*shape, c)
+		draw.CenterX(c, 0)
+		return
+	}
+
+	if shape.Left != nil && shape.IsRendered == false {
+		// shape.IsRendered = true
+		// RenderType(*shape.Left, c)
+		RenderD(shape.Left, c)
+	}
+	if shape.Right != nil && shape.IsRendered == false {
+		// shape.IsRendered = true
+		RenderD(shape.Right, c)
+	}
+	if shape.Bottom != nil && shape.IsRendered == false {
+		// shape.IsRendered = true
+		RenderD(shape.Bottom, c)
+	}
+	if shape.Top != nil && shape.IsRendered == false {
+		// shape.IsRendered = true
+		RenderD(shape.Top, c)
+	}
+
+}
+
 func DRender(shape Shape, c *draw.Canvas) {
 
-	fmt.Println()
 	// Base condition
-	if shape.Top == nil && shape.Left == nil && shape.Right == nil && shape.Bottom == nil && shape.IsRendered == false {
+	// if shape.Top == nil && shape.Left == nil && shape.Right == nil && shape.Bottom == nil && shape.IsRendered == false {
+	if shape.IsLast == true && shape.IsRendered == false {
 		shape.IsRendered = true
-		// fmt.Println("DRENDER- ", shape.Content, shape.Right)
+		fmt.Println("DRENDER- isLast")
 		RenderType(shape, c)
 		draw.CenterX(c, len(shape.Content)/2)
 		return
@@ -89,9 +168,7 @@ func DRender(shape Shape, c *draw.Canvas) {
 	if !shape.IsRendered {
 		shape.IsRendered = true
 		RenderType(shape, c)
-	}
-
-	if shape.Right != nil && shape.IsRendered == false {
+	} else if shape.Right != nil && shape.IsRendered == false {
 		shape.IsRendered = true
 		DRender(*shape.Right, c)
 		draw.CenterX(c, (len(shape.Content)+2)/2)
@@ -111,10 +188,7 @@ func DRender(shape Shape, c *draw.Canvas) {
 
 // Render Shape based upon it's type
 func RenderType(shape Shape, c *draw.Canvas) {
-	if shape.Type == HRectangle && shape.RenderDir == "left" {
-		draw.BoxHorizontalLeft(shape.Content, c)
-		return
-	}
+
 	switch shape.Type {
 	case Rectangle:
 		// draw.Box(shape.Content, c)
@@ -122,7 +196,7 @@ func RenderType(shape Shape, c *draw.Canvas) {
 	case Diamond:
 		Shape_daimond(shape.Content)
 	case HRectangle:
-		draw.BoxHorizontal(shape.Content, c)
+		BoX(shape, c)
 	case LeftArrow:
 		// draw.LeftArrow(shape.Content, c)
 		Arrow(&shape, c)

@@ -9,7 +9,8 @@ const (
 )
 
 func CenterX(c *Canvas, offset int) {
-	c.Cursor.X = (c.Cols / 2) - 10 + offset
+	// c.Cursor.X = (c.Cols / 2) - 10 + offset
+	c.Cursor.X = c.Center + 1
 	fmt.Println("Centered ordinate x: ", c.Cursor.X)
 }
 

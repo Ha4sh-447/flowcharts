@@ -8,6 +8,7 @@ type Canvas struct {
 	Cols   int
 	Grid   [][]string
 	Cursor Point
+	Center int
 }
 
 type Point struct {
@@ -41,7 +42,7 @@ func NewCanvas(r, c int) *Canvas {
 }
 
 func (c *Canvas) CenterX() {
-	c.Cursor.X = c.Cols/2 + 10
+	c.Cursor.X = 40
 }
 
 func (c *Canvas) CenterY() {

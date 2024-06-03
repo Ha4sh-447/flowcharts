@@ -48,6 +48,7 @@ func main() {
 	subNode7 := diagrams.Shape{
 		Type:    diagrams.HRectangle,
 		Content: "Sub",
+		IsLast:  true,
 	}
 
 	hArrow7 := diagrams.Shape{
@@ -63,10 +64,11 @@ func main() {
 	subNode8 := diagrams.Shape{
 		Type:    diagrams.HRectangle,
 		Content: "SubRight",
+		IsLast:  true,
 	}
 
-	fmt.Println(hArrow8, subNode8)
-	canvas := draw.NewCanvas(30, 100)
+	fmt.Println(hArrow4, subNode3)
+	// canvas := draw.NewCanvas(30, 100)
 
 	diagrams.AddToLeft(&subNode4, &hArrow5)
 	diagrams.AddToRight(&hArrow5, &subNode4)
@@ -88,16 +90,21 @@ func main() {
 
 	diagrams.AddToRight(&subNode8, &hArrow8)
 	diagrams.AddToLeft(&hArrow8, &subNode8)
+	diagrams.AddToBottom(&subNode8, &hArrow5)
 
-	diagrams.BoX(subNode3, canvas)
-	diagrams.Arrow(&hArrow4, canvas)
-	diagrams.BoX(subNode4, canvas)
-	diagrams.Arrow(&hArrow5, canvas)
-	diagrams.BoX(subNode5, canvas)
-	diagrams.Arrow(&hArrow8, canvas)
-	diagrams.BoX(subNode8, canvas)
-	diagrams.Arrow(&hArrow8, canvas)
-	diagrams.BoX(subNode8, canvas)
+	/*
+		diagrams.BoX(subNode3, canvas)
+		diagrams.Arrow(&hArrow4, canvas)
+		diagrams.BoX(subNode4, canvas)
+		diagrams.Arrow(&hArrow5, canvas)
+		diagrams.BoX(subNode5, canvas)
+		diagrams.Arrow(&hArrow8, canvas)
+		diagrams.BoX(subNode8, canvas)
+		diagrams.Arrow(&hArrow5, canvas)
+		diagrams.BoX(subNode4, canvas)
+		diagrams.Arrow(&hArrow8, canvas)
+		diagrams.BoX(subNode8, canvas)
+	*/
 
 	/*
 		diagrams.Arrow(&hArrow6, canvas)
@@ -106,8 +113,137 @@ func main() {
 		diagrams.BoX(subNode7, canvas)
 	*/
 	// diagramRenderer(canvas)
-	canvas.Render()
+	// canvas.Render()
+	canvasRender()
 
+}
+
+func canvasRender() {
+	canvas := draw.NewCanvas(30, 100)
+	diagram := diagrams.New()
+
+	subNode3 := diagrams.Shape{
+		Type:    diagrams.HRectangle,
+		Content: "SubZeroMygawwwwwwdddd3",
+	}
+
+	hArrow4 := diagrams.Shape{
+		Type:    diagrams.DownArrow,
+		Content: "",
+	}
+
+	subNode4 := diagrams.Shape{
+		Type:    diagrams.HRectangle,
+		Content: "SubOne4",
+	}
+
+	hArrow5 := diagrams.Shape{
+		Type:    diagrams.DownArrow,
+		Content: "",
+	}
+
+	subNode5 := diagrams.Shape{
+		Type:    diagrams.HRectangle,
+		Content: "SubOne5",
+	}
+
+	hArrow6 := diagrams.Shape{
+		Type:    diagrams.LeftArrow,
+		Content: "",
+	}
+
+	subNode6 := diagrams.Shape{
+		Type:    diagrams.HRectangle,
+		Content: "SubOne666",
+	}
+
+	subNode7 := diagrams.Shape{
+		Type:    diagrams.HRectangle,
+		Content: "Sub",
+		IsLast:  true,
+	}
+
+	hArrow7 := diagrams.Shape{
+		Type:    diagrams.LeftArrow,
+		Content: "",
+	}
+
+	hArrow8 := diagrams.Shape{
+		Type:    diagrams.RightArrow,
+		Content: "",
+	}
+
+	subNode8 := diagrams.Shape{
+		Type:    diagrams.HRectangle,
+		Content: "SubRight",
+		// IsLast:  true,
+	}
+
+	hArrow9 := diagrams.Shape{
+		Type:    diagrams.RightArrow,
+		Content: "",
+	}
+
+	subNode9 := diagrams.Shape{
+		Type:    diagrams.HRectangle,
+		Content: "SubRight2",
+		IsLast:  true,
+	}
+
+	diagrams.AddToBottom(&subNode3, &hArrow4)
+	diagrams.AddToTop(&hArrow4, &subNode3)
+
+	diagrams.AddToLeft(&subNode4, &hArrow5)
+	diagrams.AddToRight(&hArrow5, &subNode4)
+	diagrams.AddToRight(&subNode5, &hArrow5)
+	diagrams.AddToLeft(&subNode5, &hArrow6)
+	diagrams.AddToRight(&hArrow6, &subNode5)
+	diagrams.AddToLeft(&hArrow6, &subNode6)
+	diagrams.AddToRight(&subNode6, &hArrow6)
+	diagrams.AddToLeft(&subNode6, &hArrow7)
+	diagrams.AddToLeft(&hArrow7, &subNode7)
+	diagrams.AddToRight(&subNode7, &hArrow7)
+	diagrams.AddToRight(&hArrow7, &subNode6)
+
+	diagrams.AddToRight(&subNode5, &hArrow8)
+	diagrams.AddToLeft(&hArrow8, &subNode5)
+
+	diagrams.AddToRight(&hArrow8, &subNode8)
+	diagrams.AddToLeft(&subNode8, &hArrow8)
+
+	diagrams.AddToRight(&subNode8, &hArrow9)
+	diagrams.AddToLeft(&hArrow9, &subNode8)
+	// diagrams.AddToBottom(&subNode8, &hArrow5)
+	diagrams.AddToRight(&hArrow9, &subNode9)
+	diagrams.AddToLeft(&subNode9, &hArrow9)
+
+	diagram.AddShapes(subNode3)
+	diagram.AddShapes(hArrow4)
+	diagram.AddShapes(subNode4)
+	diagram.AddShapes(hArrow5)
+	diagram.AddShapes(subNode5)
+	diagram.AddShapes(hArrow6)
+	diagram.AddShapes(subNode6)
+	diagram.AddShapes(hArrow7)
+	diagram.AddShapes(subNode7)
+	diagram.AddShapes(hArrow8)
+	diagram.AddShapes(subNode8)
+	diagram.AddShapes(hArrow9)
+	diagram.AddShapes(subNode9)
+
+	for _, shape := range diagram.S {
+		// fmt.Println(shape)
+		diagrams.RenderD(&shape, canvas)
+	}
+
+	/*
+		// diagrams.ReRender(*subNode3, diagrams.S, canvas)
+		for _, shape := range diagram.S {
+			diagrams.ReRender(&shape, diagram.S, canvas)
+		}
+	*/
+
+	canvas.Render()
 }
 
 func canvaseDiag() {
@@ -243,11 +379,13 @@ func diagramRenderer(c *draw.Canvas) {
 	diagram.AddShapes(vArrow2)
 	diagram.AddShapes(subNode2)
 
-	// diagram.Render()
-	for _, shape := range diagram.Shapes {
-		// fmt.Println(shape)
-		diagrams.DRender(shape, c)
-	}
+	/*
+		// diagram.Render()
+		for _, shape := range diagram.Shapes {
+			// fmt.Println(shape)
+			diagrams.DRender(shape, c)
+		}
+	*/
 
 	// diagrams.Horizontal_shape_rectangle("foobar")
 	// fmt.Println()
