@@ -1,6 +1,8 @@
 package draw
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // Canvas grid will be the draw area
 type Canvas struct {
@@ -24,7 +26,7 @@ func NewCanvas(r, c int) *Canvas {
 	}
 	for i := range g {
 		for j := range g[i] {
-			g[i][j] = "."
+			g[i][j] = " "
 		}
 	}
 
@@ -39,6 +41,11 @@ func NewCanvas(r, c int) *Canvas {
 		Grid:   g,
 		Cursor: p,
 	}
+}
+
+func Center(c *Canvas, x, y int) {
+	c.Cursor.X = x
+	c.Cursor.Y = y
 }
 
 func (c *Canvas) CenterX() {
@@ -60,6 +67,3 @@ func (c *Canvas) Render() {
 // When drawing on canvas
 // Draw the first shape in center
 // ///////////////////////////// DRAW LOGIC /////////////////////////////////
-func (c *Canvas) Draw() {
-
-}

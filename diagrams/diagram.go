@@ -31,14 +31,25 @@ type Shape struct {
 	PrevLen      int
 	RenderDir    string
 	IsLast       bool
+	IsJunction   bool
+	MidX         int
+	MidY         int
 }
 
 type Diagram struct {
 	S []Shape
 }
 
+type Store struct {
+	queue []*Shape
+}
+
 func New() *Diagram {
 	return &Diagram{}
+}
+
+func NewStore() *Store {
+	return &Store{}
 }
 
 // Add Shapes to the Diagram struct
@@ -74,116 +85,66 @@ func AddToTop(shape *Shape, subShape *Shape) Shape {
 	return *shape
 }
 
-func ReRender(s *Shape, shapes []Shape, c *draw.Canvas) {
-
-	if s.IsRendered == false {
-		for _, i := range shapes {
-			if s == &i {
-				RenderType(*s, c)
-				s.IsRendered = true
-			}
+func findNode(shape Shape, d []Shape) *Shape {
+	for _, s := range d {
+		if shape == s {
+			return &s
 		}
 	}
-
-	if s.IsLast == true {
-		RenderType(*s, c)
-		draw.CenterX(c, 0)
-		return
-	}
-
-	if s.Left != nil && s.IsRendered == false {
-		// RenderType(*s.Left, c)
-		ReRender(s.Left, shapes, c)
-		// s.IsRendered= true
-	}
-
-	if s.Right != nil && s.IsRendered == false {
-		// RenderType(*s.Right, c)
-		ReRender(s.Right, shapes, c)
-		// s.IsRendered=true
-	}
-
-	if s.Bottom != nil && s.IsRendered == false {
-		// RenderType(*s.Bottom, c)
-		ReRender(s.Bottom, shapes, c)
-		// s.IsRendered=true
-	}
-
-	if s.Top != nil && s.IsRendered == false {
-		// RenderType(*s.Top, c)
-		ReRender(s.Top, shapes, c)
-		// s.IsRendered=true
-	}
-
+	return nil
 }
 
-func RenderD(shape *Shape, c *draw.Canvas) {
+func (s *Store) Junction(shape *Shape, c *draw.Canvas) {
+
+	shape.MidX = c.Cursor.X
+	shape.MidY = c.Cursor.Y
+	s.queue = append(s.queue, shape)
+	fmt.Println("\nSHAPE ADDED TO THE QUEUE:  ", shape.MidX, shape.Content, shape.MidY)
+}
+
+func (s *Store) getJunction() *Shape {
+	fmt.Println(s.queue[len(s.queue)-1])
+	return s.queue[len(s.queue)-1]
+}
+
+func RenderD(shape *Shape, c *draw.Canvas, s *Store) {
 
 	if shape.IsRendered == false {
 		shape.IsRendered = true
 		RenderType(*shape, c)
+		if shape.IsJunction {
+			s.Junction(shape, c)
+		}
 	}
 
 	if shape.IsLast == true {
 		fmt.Println("RenderD--")
+		fmt.Println(shape.Content)
 		// shape.IsRendered = true
 		// RenderType(*shape, c)
-		draw.CenterX(c, 0)
+		_s := s.getJunction()
+		draw.Center(c, _s.MidX, _s.MidY)
 		return
 	}
 
 	if shape.Left != nil && shape.IsRendered == false {
 		// shape.IsRendered = true
 		// RenderType(*shape.Left, c)
-		RenderD(shape.Left, c)
+		RenderD(shape.Left, c, s)
 	}
 	if shape.Right != nil && shape.IsRendered == false {
 		// shape.IsRendered = true
-		RenderD(shape.Right, c)
+		RenderD(shape.Right, c, s)
 	}
 	if shape.Bottom != nil && shape.IsRendered == false {
 		// shape.IsRendered = true
-		RenderD(shape.Bottom, c)
+		RenderD(shape.Bottom, c, s)
 	}
 	if shape.Top != nil && shape.IsRendered == false {
 		// shape.IsRendered = true
-		RenderD(shape.Top, c)
+		RenderD(shape.Top, c, s)
 	}
 
-}
-
-func DRender(shape Shape, c *draw.Canvas) {
-
-	// Base condition
-	// if shape.Top == nil && shape.Left == nil && shape.Right == nil && shape.Bottom == nil && shape.IsRendered == false {
-	if shape.IsLast == true && shape.IsRendered == false {
-		shape.IsRendered = true
-		fmt.Println("DRENDER- isLast")
-		RenderType(shape, c)
-		draw.CenterX(c, len(shape.Content)/2)
-		return
-	}
-
-	// Render initial shape
-	if !shape.IsRendered {
-		shape.IsRendered = true
-		RenderType(shape, c)
-	} else if shape.Right != nil && shape.IsRendered == false {
-		shape.IsRendered = true
-		DRender(*shape.Right, c)
-		draw.CenterX(c, (len(shape.Content)+2)/2)
-	} else if shape.Left != nil && shape.IsRendered == false {
-		shape.IsRendered = true
-		shape.Left.RenderDir = "left"
-		DRender(*shape.Left, c)
-		// draw.CenterX(c, len(shape.Content)/2)
-	} else if shape.Bottom != nil && shape.IsRendered == false {
-		shape.IsRendered = true
-		DRender(*shape.Bottom, c)
-	} else if shape.Top != nil && shape.IsRendered == false {
-		shape.IsRendered = true
-		DRender(*shape.Top, c)
-	}
 }
 
 // Render Shape based upon it's type
