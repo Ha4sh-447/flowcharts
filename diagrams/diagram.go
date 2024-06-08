@@ -1,11 +1,8 @@
 package diagrams
 
 import (
-	// "fmt"
 	"fmt"
-
 	"github.com/Ha4sh-447/diagramFromText/draw"
-	// "strings"
 )
 
 type ShapeType int
@@ -154,8 +151,6 @@ func RenderType(shape Shape, c *draw.Canvas) {
 	case Rectangle:
 		// draw.Box(shape.Content, c)
 		BoX(shape, c)
-	case Diamond:
-		Shape_daimond(shape.Content)
 	case HRectangle:
 		BoX(shape, c)
 	case LeftArrow:
