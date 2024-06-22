@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/Ha4sh-447/diagramFromText/diagrams"
-	"github.com/Ha4sh-447/diagramFromText/draw"
+	"github.com/Ha4sh-447/flowchartFromText/diagrams"
+	"github.com/Ha4sh-447/flowchartFromText/draw"
 )
 
 func main() {
@@ -10,12 +10,16 @@ func main() {
 }
 
 func canvasRender() {
+
+	//Create canvas of desired size
 	canvas := draw.NewCanvas(30, 100)
+
+	// Describe your shapes/nodes with type and content
 	diagram := diagrams.New()
 
 	subNode3 := diagrams.Shape{
 		Type:    diagrams.HRectangle,
-		Content: "SubZeroMygawwwwwwdddd3",
+		Content: "SubZero",
 	}
 
 	hArrow4 := diagrams.Shape{
@@ -61,8 +65,7 @@ func canvasRender() {
 	}
 
 	hArrow8 := diagrams.Shape{
-		Type:    diagrams.RightArrow,
-		Content: "",
+		Type: diagrams.RightArrow,
 	}
 
 	subNode8 := diagrams.Shape{
@@ -73,8 +76,7 @@ func canvasRender() {
 	}
 
 	hArrow9 := diagrams.Shape{
-		Type:    diagrams.RightArrow,
-		Content: "",
+		Type: diagrams.RightArrow,
 	}
 
 	subNode9 := diagrams.Shape{
@@ -90,13 +92,11 @@ func canvasRender() {
 	}
 
 	hArrow10 := diagrams.Shape{
-		Type:    diagrams.DownArrow,
-		Content: "",
+		Type: diagrams.DownArrow,
 	}
 
 	hArrow11 := diagrams.Shape{
-		Type:    diagrams.DownArrow,
-		Content: "",
+		Type: diagrams.DownArrow,
 	}
 
 	subNode11 := diagrams.Shape{
@@ -104,6 +104,19 @@ func canvasRender() {
 		Content: "SubDownnn2",
 		IsLast:  true,
 	}
+
+	// Make connections
+	// 2 way connections to be made
+	// if head of arrow points to left side of box
+	// then the left of box should have a reference to head of the arrow
+	// and head of arrow should have reference to left of box
+	// like this
+	/*
+		diagrams.AddToRight(&hArrow8, &subNode8)
+		diagrams.AddToLeft(&subNode8, &hArrow8)
+	*/
+
+	// Check diagram.go for more details on how Shape works
 
 	diagrams.AddToBottom(&subNode3, &hArrow4)
 	diagrams.AddToTop(&hArrow4, &subNode3)
@@ -119,6 +132,8 @@ func canvasRender() {
 	diagrams.AddToLeft(&hArrow7, &subNode7)
 	diagrams.AddToRight(&subNode7, &hArrow7)
 	diagrams.AddToRight(&hArrow7, &subNode6)
+
+	diagrams.AddToTop(&subNode5, &hArrow5)
 
 	diagrams.AddToRight(&subNode5, &hArrow8)
 	diagrams.AddToLeft(&hArrow8, &subNode5)
@@ -144,6 +159,10 @@ func canvasRender() {
 	diagrams.AddToBottom(&hArrow11, &subNode11)
 	diagrams.AddToTop(&subNode11, &hArrow11)
 
+	// Add shapes to the Diagram
+	// The order in which the shapes are addes is importent (since findNode function isn't being used)
+	// Since hArrow4 comes after subNode3 it is added after subNode3 and so on
+
 	diagram.AddShapes(subNode3)
 	diagram.AddShapes(hArrow4)
 	diagram.AddShapes(subNode4)
@@ -165,7 +184,6 @@ func canvasRender() {
 	s := diagrams.NewStore()
 
 	for _, shape := range diagram.S {
-		// fmt.Println(shape)
 		diagrams.RenderD(&shape, canvas, s)
 	}
 

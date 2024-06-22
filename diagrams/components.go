@@ -1,31 +1,20 @@
 package diagrams
 
 import (
-	"fmt"
-
-	"github.com/Ha4sh-447/diagramFromText/draw"
+	"github.com/Ha4sh-447/flowchartFromText/draw"
 )
 
 const HEIGHT = 3
 const ARROWLEN = 3
 
+// Render Box
 func BoX(s Shape, c *draw.Canvas) {
-	// X and Y will always be the topleft corner of the box
 	x := c.Cursor.X
 	y := c.Cursor.Y
 	width := len(s.Content)
 
-	// NO it won't be top left
-	// it will center of the top border
-
 	//After rendering the updated point of Cursor will be
 	// as the middle of bottom border
-	fmt.Println("BOX - x ", x)
-	fmt.Println("BOX - y ", y)
-
-	fmt.Println("CUUNTENT LENINTHINOOO: ", len(s.Content))
-
-	fmt.Println("BOX - UPDATED x ", x-len(s.Content)/2, x+len(s.Content)/2, y)
 
 	if s.Right != nil && s.Right.Type == LeftArrow {
 		// x = x+width +1
@@ -119,17 +108,14 @@ func BoX(s Shape, c *draw.Canvas) {
 	}
 }
 
-// What this function does is : simple - render an arrow based upon the render direction
+// Render an arrow based upon the render direction
 // takes the content length of the previous shape so that it can adjust itself to the center of
 // the prev shape
 func Arrow(s *Shape, c *draw.Canvas) {
 	x := c.Cursor.X
 	y := c.Cursor.Y
-	fmt.Println("ARROW- init X ", x)
-	fmt.Println("ARROW - init - Y ", y)
 
 	if s.Type == LeftArrow {
-		fmt.Println("LEFT")
 		// CURSOR is at the center of the bottom of previous shape
 		x = c.Cursor.X - (len(s.Right.Content) / 2) - 1
 		y = c.Cursor.Y - (HEIGHT)/2
@@ -143,9 +129,13 @@ func Arrow(s *Shape, c *draw.Canvas) {
 		c.Cursor.X = x - ARROWLEN - 1
 		c.Cursor.Y = y
 	} else if s.Type == RightArrow {
-		fmt.Println("RIGHT")
 		x = c.Cursor.X + (len(s.Left.Content) / 2)
 		y = c.Cursor.Y - HEIGHT/2
+
+		// small fix
+		if s.Left.Top != nil {
+			x = x + 1
+		}
 
 		for i := x + 1; i < x+ARROWLEN+1; i++ {
 			c.Grid[y][i] = "-"
@@ -166,8 +156,4 @@ func Arrow(s *Shape, c *draw.Canvas) {
 		// using the down arrow as the reference
 		c.Center = c.Cursor.X
 	}
-
-	fmt.Println("ARROW- final X ", x)
-	fmt.Println("ARROW - final - Y ", y)
-
 }

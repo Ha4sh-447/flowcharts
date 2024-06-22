@@ -52,9 +52,6 @@ func (c *Canvas) CenterX() {
 	c.Cursor.X = 40
 }
 
-func (c *Canvas) CenterY() {
-}
-
 func (c *Canvas) Render() {
 	for i := range c.Grid {
 		for j := range c.Grid[0] {
@@ -63,7 +60,3 @@ func (c *Canvas) Render() {
 		fmt.Println()
 	}
 }
-
-// When drawing on canvas
-// Draw the first shape in center
-// ///////////////////////////// DRAW LOGIC /////////////////////////////////
