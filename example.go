@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/Ha4sh-447/flowchartFromText/diagrams"
-	"github.com/Ha4sh-447/flowchartFromText/draw"
+	"github.com/Ha4sh-447/flowcharts/diagrams"
+	"github.com/Ha4sh-447/flowcharts/draw"
 )
 
 func main() {

@@ -1,7 +1,7 @@
 package diagrams
 
 import (
-	"github.com/Ha4sh-447/flowchartFromText/draw"
+	"github.com/Ha4sh-447/flowcharts/draw"
 )
 
 const HEIGHT = 3
