@@ -8,6 +8,7 @@
 <h4>example.go</h4>
 <pre><code>go run example.go</code></pre>
     
-<p><img src="./screenshots/result.jpg" alt="Flowchart result"></p>
+<p><img src="./screenshots/result.jpg" alt="Flowchart example 1"></p>
+<p><img src="./screenshots/result2.jpg" alt="Flowchart example 2"></p>
     
 <p>This project can be extended to create hand drawn images of flowchart.</p>

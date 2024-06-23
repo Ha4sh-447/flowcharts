@@ -85,35 +85,36 @@ func (d *Diagram) AddShapes(shape Shape) {
 	d.S = append(d.S, shape)
 }
 
-// Add Shape to the right of the node
-func AddToRight(shape *Shape, subShape *Shape) Shape {
+// Add subShape to right of shape
+func AddToRight(shape *Shape, subShape *Shape) {
 	// Adds shape to right of the parent shape
 	shape.Right = subShape
-	return *shape
+	// Adds subShape to left of shape
+	subShape.Left = shape
 }
 
-// Add Shape to the left of the node
-func AddToLeft(shape *Shape, subShape *Shape) Shape {
+// Add subShape to left of shape
+func AddToLeft(shape *Shape, subShape *Shape) {
 	// Adds shape to right of the parent shape
 	shape.Left = subShape
-	return *shape
+	subShape.Right = shape
 }
 
-// Add Shape to the bottom of the node
-func AddToBottom(shape *Shape, subShape *Shape) Shape {
+// Add subShape to the bottom of the shape
+func AddToBottom(shape *Shape, subShape *Shape) {
 	// Adds shape to right of the parent shape
 	shape.Bottom = subShape
-	return *shape
+	subShape.Top = shape
 }
 
-// Add Shape to the top of the node
-func AddToTop(shape *Shape, subShape *Shape) Shape {
+// Add subShape to the top of the shape
+func AddToTop(shape *Shape, subShape *Shape) {
 	// Adds shape to right of the parent shape
 	shape.Top = subShape
-	return *shape
+	subShape.Bottom = shape
 }
 
-// Finds a node/shape
+// Finds a node/shape from the given list of shape
 func findNode(shape Shape, d []Shape) *Shape {
 	for _, s := range d {
 		if shape == s {
